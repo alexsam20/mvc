@@ -4,10 +4,12 @@ class Home extends Controller
 {
     public function index($a = '', $b = '', $d = '')
     {
-        echo __METHOD__;
         $model = new Model();
-        $user['name'] = 'Alex';
-        $result = $model->where($user);
+        $user['name'] = 'Chris';
+        $user['age'] = 62;
+
+        $result = $model->update(1, $user);
+
         print_pre($result);
         $this->view('home');
     }
