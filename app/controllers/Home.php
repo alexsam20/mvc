@@ -4,11 +4,8 @@ class Home extends Controller
 {
     public function index($a = '', $b = '', $d = '')
     {
-        $model = new Model();
-        $user['name'] = 'Chris';
-        $user['age'] = 62;
-
-        $result = $model->update(1, $user);
+        $user = new User();
+        $result = $user->findAll();
 
         print_pre($result);
         $this->view('home');

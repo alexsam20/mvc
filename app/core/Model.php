@@ -1,21 +1,27 @@
 <?php
 
-class Model
+trait Model
 {
     use Database;
 
-    protected string $table = 'users';
     protected int $limit = 10;
     protected int $offset = 0;
 
+    protected string $orderType = 'desc';
+
+    protected string $orderColumn = 'id';
+
+    public function findAll()
+    {
+        $query = "select * from $this->table order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
+
+        return $this->query($query);
+    }
+
     public function where($data, $data_not = [])
     {
-        /*$fields = array_keys($data);
-        $columns = implode(', ', $fields);
-        $binds = implode(', ', array_map(static fn ($field) => ":$field", $fields));*/
-
-        $keys = array_keys($data);
-        $keys_not = array_keys($data_not);
+        $keys = $this->keysInArray($data);
+        $keys_not = $this->keysInArray($data_not);
         $query = "select * from $this->table where ";
         foreach ($keys as $key) {
             $query .= $key . " = :" . $key . " && ";
@@ -24,7 +30,7 @@ class Model
             $query .= $key . " != :" . $key . " && ";
         }
         $query = trim($query, " && ");
-        $query .= " limit $this->limit offset $this->offset";
+        $query .= " order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
 
         return $this->query($query, $data);
@@ -32,8 +38,8 @@ class Model
 
     public function first($data, $data_not = [])
     {
-        $keys = array_keys($data);
-        $keys_not = array_keys($data_not);
+        $keys = $this->keysInArray($data);
+        $keys_not = $this->keysInArray($data_not);
         $query = "select * from $this->table where ";
         foreach ($keys as $key) {
             $query .= $key . " = :" . $key . " && ";
@@ -45,15 +51,17 @@ class Model
         $query .= " limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
         $result = $this->query($query, $data);
+
         if (count($result) > 0) {
             return $result[0];
         }
+
         return false;
     }
 
     public function insert($data)
     {
-        $keys = array_keys($data);
+        $keys = $this->keysInArray($data);
         $query = "insert into $this->table (" . implode(', ', $keys) . ") values (:" . implode(', :', $keys) . ")";
         $this->query($query, $data);
 
@@ -62,7 +70,7 @@ class Model
 
     public function update($id, $data, $id_column = 'id')
     {
-        $keys = array_keys($data);
+        $keys = $this->keysInArray($data);
         $query = "update $this->table set ";
 
         foreach ($keys as $key) {
@@ -73,7 +81,6 @@ class Model
         $query .= " where $id_column = :$id_column";
 
         $data[$id_column] = $id;
-//        print_pre($query);
         $this->query($query, $data);
 
         return false;
@@ -87,5 +94,10 @@ class Model
         $this->query($query, $data);
 
         return false;
+    }
+
+    private function keysInArray(array $data): array
+    {
+        return array_keys($data);
     }
 }
