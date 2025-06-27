@@ -5,7 +5,10 @@ class Home extends Controller
     public function index($a = '', $b = '', $d = '')
     {
         echo __METHOD__;
-        $db = new Database();
+        $model = new Model();
+        $user['name'] = 'Alex';
+        $result = $model->where($user);
+        print_pre($result);
         $this->view('home');
     }
 }
