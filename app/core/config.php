@@ -10,3 +10,7 @@ const DB_HOST = 'localhost';
 const DB_USER = 'alex';
 const DB_PASS = 'alex1970MD3214';
 const DB_NAME = 'mvc';
+
+const APP_NAME = 'MVC';
+const APP_DESC = 'Model View Controller';
+const DEBUG = true;

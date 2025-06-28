@@ -18,17 +18,27 @@ class App
     public function loadController(): void
     {
         $url = $this->getQueryString();
+        /** Select Controller **/
         $fileName = "../app/controllers/" . ucfirst($url[0]) . ".php";
         if (file_exists($fileName)) {
             require $fileName;
             $this->controller = ucfirst($url[0]);
+            unset($url[0]);
         } else {
             require "../app/controllers/_404.php";
             $this->controller = "_404";
         }
-
         $controller = new $this->controller;
-        call_user_func_array([$controller, $this->method], []);
+
+        /** Select Method **/
+        if (!empty($url[1])) {
+            if (method_exists($controller, $url[1])) {
+                $this->method = $url[1];
+                unset($url[1]);
+            }
+        }
+//        print_pre($url);
+        call_user_func_array([$controller, $this->method], $url);
 
     }
 }
