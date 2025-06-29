@@ -6,6 +6,7 @@ class Home
 
     public function index()
     {
-        $this->view('home');
+        $data['user'] = empty($_SESSION['user']) ? 'User' : $_SESSION['user']->email;
+        $this->view('home', $data);
     }
 }

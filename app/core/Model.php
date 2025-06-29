@@ -6,10 +6,9 @@ trait Model
 
     protected int $limit = 10;
     protected int $offset = 0;
-
     protected string $orderType = 'desc';
-
     protected string $orderColumn = 'id';
+    public array $errors = [];
 
     public function findAll()
     {
@@ -52,7 +51,7 @@ trait Model
         $data = array_merge($data, $data_not);
         $result = $this->query($query, $data);
 
-        if (count($result) > 0) {
+        if ($result) {
             return $result[0];
         }
 

@@ -9,3 +9,9 @@ function esc($string): string
 {
     return htmlspecialchars($string);
 }
+
+function redirect($url): void
+{
+    header('Location: ' . DOCUMENT_ROOT . "/" . $url);
+    die();
+}
