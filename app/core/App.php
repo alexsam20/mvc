@@ -1,5 +1,5 @@
 <?php
-
+defined('ROOTPATH') OR exit('Access Denied!');
 class App
 {
     private string $controller = 'Home';
@@ -7,12 +7,11 @@ class App
 
     private function getQueryString(): array|string
     {
-        $url = $_SERVER['REQUEST_URI'];
-        if ($url !== '/') {
-            return explode('/', trim($url, '/'));
+        $url = $_SERVER['REQUEST_URI'] ?? 'home';
+        if ($_SERVER['REQUEST_URI'] === '/') {
+            $url = 'home';
         }
-
-        return '/';
+        return explode('/', trim($url, '/'));
     }
 
     public function loadController(): void
@@ -37,7 +36,7 @@ class App
                 unset($url[1]);
             }
         }
-//        print_pre($url);
+
         call_user_func_array([$controller, $this->method], $url);
 
     }

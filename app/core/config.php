@@ -1,4 +1,5 @@
 <?php
+defined('ROOTPATH') OR exit('Access Denied!');
 $protocol = explode('/', $_SERVER['SERVER_PROTOCOL']);
 $protocol = strtolower($protocol[0]);
 $host = $protocol . "://" . $_SERVER['HTTP_HOST'];

@@ -1,5 +1,5 @@
 <?php
-
+defined('ROOTPATH') OR exit('Access Denied!');
 trait Model
 {
     use Database;
@@ -10,14 +10,14 @@ trait Model
     protected string $orderColumn = 'id';
     public array $errors = [];
 
-    public function findAll()
+    public function findAll(): false|array
     {
         $query = "select * from $this->table order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
 
         return $this->query($query);
     }
 
-    public function where($data, $data_not = [])
+    public function where($data, $data_not = []): false|array
     {
         $keys = $this->keysInArray($data);
         $keys_not = $this->keysInArray($data_not);
@@ -35,7 +35,7 @@ trait Model
         return $this->query($query, $data);
     }
 
-    public function first($data, $data_not = [])
+    public function first($data, $data_not = []): mixed
     {
         $keys = $this->keysInArray($data);
         $keys_not = $this->keysInArray($data_not);
