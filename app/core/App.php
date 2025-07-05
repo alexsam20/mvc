@@ -27,7 +27,7 @@ class App
             require "../app/controllers/_404.php";
             $this->controller = "_404";
         }
-        $controller = new $this->controller;
+        $controller = new ('\Controller\\' . $this->controller);
 
         /** Select Method **/
         if (!empty($url[1])) {

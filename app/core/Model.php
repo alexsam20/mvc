@@ -1,4 +1,5 @@
 <?php
+namespace Model;
 defined('ROOTPATH') OR exit('Access Denied!');
 trait Model
 {

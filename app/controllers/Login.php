@@ -1,5 +1,5 @@
 <?php
-
+namespace Controllers;
 class Login
 {
     use Controller;

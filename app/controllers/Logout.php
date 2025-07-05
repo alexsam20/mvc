@@ -1,5 +1,5 @@
 <?php
-
+namespace Controllers;
 class Logout
 {
     use Controller;

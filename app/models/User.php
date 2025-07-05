@@ -1,4 +1,7 @@
 <?php
+namespace Models;
+use Model\Model;
+
 defined('ROOTPATH') OR exit('Access Denied!');
 class User
 {

@@ -1,4 +1,7 @@
 <?php
+
+use Models\Image;
+
 defined('ROOTPATH') or exit('Access Denied!');
 /** Check with php extensions are required **/
 checkExtensions();
@@ -157,7 +160,7 @@ function oldSelect(string $key, mixed $value, mixed $default = "", string $mode 
     return "";
 }
 /** Returns a user readable date format **/
-function getDate($date): string
+function get_date($date): string
 {
     return date("jS M, Y", strtotime($date));
 }
@@ -190,7 +193,7 @@ function removeImagesFromContent(string $content, $folder = "uploads/")
 
     if (is_array($matches) && count($matches) > 0) {
 
-        $imageClass = new \Core\Image();
+        $imageClass = new Image();
         foreach ($matches[0] as $match) {
             if (strstr($match, "http")) {
                 // ignore images with links already
